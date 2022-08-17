@@ -14,9 +14,16 @@ public class Building : MonoBehaviour
         if (!landed)
         {
             landed = true;
-            var landedInRange = CaneController.Instance.LandBuilding(transform);
+            var landedInRange = CraneController.Instance.LandBuilding(transform);
             if (landedInRange)
-                rigidBody.isKinematic = true;
+                LeanTween.delayedCall(1, () =>
+                {
+                    rigidBody.isKinematic = true;
+                });
+            else
+            {
+                LeanTween.delayedCall(3, () => gameObject.SetActive(false));
+            }
         }
     }
 }
